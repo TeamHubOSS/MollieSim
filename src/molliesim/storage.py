@@ -11,6 +11,9 @@ PF_CUSTOMER = "C"
 PF_SUBSCRIPTION = "S"
 
 
+def clear():
+    MEMSTOR.clear()
+
 def set_payment(p):
     with s:
         if not p.id:

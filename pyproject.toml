@@ -17,3 +17,9 @@ dynamic = ["version"]
 [build-system]
 requires = ["flit"]
 build-backend = "flit.buildapi"
+
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
