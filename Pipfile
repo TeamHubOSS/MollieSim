@@ -11,6 +11,3 @@ pydantic = "*"
 [dev-packages]
 ipdb = "*"
 flit = "*"
-
-[requires]
-python_version = "3.9"
