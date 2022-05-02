@@ -4,10 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-jsonschema = "*"
-dataclasses-jsonschema = "*"
 pydantic = "*"
 
 [dev-packages]
-ipdb = "*"
 flit = "*"
