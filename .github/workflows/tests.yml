@@ -20,4 +20,6 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pipenv'
+      - run: pipenv install
       - run: echo "🍏 This job's status is ${{ job.status }}."
