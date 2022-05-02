@@ -1,11 +1,7 @@
 [project]
 name = "molliesim"
-version = "0.0.1"
 description = "Simulator of the Mollie API for testing purposes."
 readme = "README.md"
-authors = [
-  {name="Vasco Visser", email="vasco@team-hub.eu"}
-]
 dependencies = [
   'pydantic ~= 1.9',
 ]
@@ -16,6 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.5",
 ]
 requires-python = ">=3.5"
+dynamic = ["version"]
 
 [build-system]
 requires = ["flit"]
