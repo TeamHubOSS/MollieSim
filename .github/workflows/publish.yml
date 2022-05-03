@@ -1,9 +1,5 @@
 name: Publish to PyPi
-on:
-  workflow_run:
-    workflows: [Tests]
-    types:
-      - completed
+on: [push]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -18,6 +14,8 @@ jobs:
           python-version: 3.9
           cache: 'pipenv'
       - run: pipenv install --dev
+      - name: Run tests
+        run: pipenv run test
       - name: Install pypa/build
         run: pipenv run flit build
       - name: Publish package to test
