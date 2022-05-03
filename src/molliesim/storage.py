@@ -1,38 +1,49 @@
-import threading
+from threading import BoundedSemaphore
 from collections import defaultdict
+from dataclasses import dataclass
+from enum import Enum
 from uuid import uuid4
 
-s = threading.BoundedSemaphore(value=1)
+s = BoundedSemaphore(value=1)
 
 MEMSTOR = defaultdict(dict)
 
-PF_PAYMENT = "P"
-PF_CUSTOMER = "C"
-PF_SUBSCRIPTION = "S"
+
+@dataclass
+class ResourceType:
+    group_key: str
+    id_prefix: str
 
 
-def clear():
-    MEMSTOR.clear()
-
-def set_payment(p):
-    with s:
-        if not p.id:
-            p.id = get_payment_id()
-        MEMSTOR[PF_PAYMENT][p.id] = p
+class ResourceTypes(Enum):
+    PAYMENT = ResourceType(group_key="P", id_prefix="tr_")
 
 
-def get_payment(pid):
-    return MEMSTOR[PF_PAYMENT][p.id]
+class Storage:
+    def __init__(self, resource_type):
+        self.resource_type = resource_type.value
 
+    def get(self, _id):
+        return MEMSTOR[self.resource_type.group_key][_id]
 
-def get_payment_id():
-    while True:
-        candidate = f"tr_{str(uuid4()).split('-')[0]}"
-        if candidate not in MEMSTOR[PF_PAYMENT]:
-            return candidate
+    def list(self):
+        return list(MEMSTOR[self.resource_type.group_key].values())
 
-    return MEMSTOR[PF_PAYMENT][p.id]
+    def set(self, item):
+        with s:
+            if not item.id:
+                item.id = self.find_id()
+            MEMSTOR[self.resource_type.group_key][item.id] = item
 
+    def clear(self):
+        MEMSTOR[self.resource_type.group_key].clear()
 
-def list_payments():
-    return list(MEMSTOR[PF_PAYMENT].values())
+    def find_id(self):
+        while True:
+            candidate = f"{self.resource_type.id_prefix}{str(uuid4()).split('-')[0]}"
+            if candidate not in MEMSTOR[self.resource_type.group_key]:
+                return candidate
+
+    @staticmethod
+    def clear_all():
+        MEMSTOR.clear()

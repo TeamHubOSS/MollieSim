@@ -53,7 +53,6 @@ class TestPaymentApi(MollieTestCase):
             "_links": {"next": None, "previous": None},
         }
 
-        print(datetime.datetime.now())
         diff = DeepDiff(
             rv.json(),
             expected,

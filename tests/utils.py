@@ -4,7 +4,7 @@ from unittest import TestCase
 import time
 
 from molliesim.server import MollieRequestHandler
-from molliesim import storage
+from molliesim.storage import Storage
 
 
 class TestServer(Thread):
@@ -21,14 +21,11 @@ class TestServer(Thread):
 
 
 class MollieTestCase(TestCase):
-
-
     def setUp(self):
         self.server = TestServer()
         self.server.start()
 
-
     def tearDown(self):
         self.server.stop()
         self.server.join()
-        storage.clear()
+        Storage.clear_all()
