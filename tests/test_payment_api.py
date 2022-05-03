@@ -1,7 +1,10 @@
 import time
 import requests
+import datetime
 
 from deepdiff import DeepDiff
+from freezegun import freeze_time
+
 from .utils import MollieTestCase
 
 
@@ -16,6 +19,7 @@ class TestPaymentApi(MollieTestCase):
         rv = requests.post("http://localhost:3333/v2/payments", json=payload)
         self.assertEqual(rv.status_code, 201, msg=rv.json())
 
+    @freeze_time("2022-06-01")
     def test_list_payments(self):
         payload = {
             "amount": {"currency": "EUR", "value": "100.00"},
@@ -33,11 +37,15 @@ class TestPaymentApi(MollieTestCase):
             "_embed": {
                 "payments": [
                     {
+                        "resource": "payment",
                         "amount": {"currency": "EUR", "value": "100.00"},
                         "description": "My first API payment",
                         "webhookUrl": "https://webshop.example.org/mollie-webhook/",
                         "redirectUrl": "https://webshop.example.org/order/12345/",
                         "sequenceType": "oneoff",
+                        "createdAt": "2022-06-01T00:00:00",
+                        'metadata': None,
+                        'status': 'open',
                     },
                 ]
             },
@@ -45,6 +53,7 @@ class TestPaymentApi(MollieTestCase):
             "_links": {"next": None, "previous": None},
         }
 
+        print(datetime.datetime.now())
         diff = DeepDiff(
             rv.json(),
             expected,

@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 
 from uuid import uuid4
@@ -26,17 +27,30 @@ class Amount(BaseModel):
         return v
 
 
-class Payment(BaseModel):
+class PaymentCreate(BaseModel):
     amount: Amount
     description: str
     webhookUrl: str
     redirectUrl: str
     sequenceType: str = "oneoff"
-    id: str = None
+    metadata: dict = None
 
     def __init__(self, **data):
         super().__init__(**data)
-        self.id = None
+
+    class Config:
+        extra = "forbid"
+
+
+class Payment(PaymentCreate):
+    id: str = None
+    resource: str = None
+    status: str = "open"
+    createdAt: datetime = Field(default_factory=lambda: datetime.now().isoformat())
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.resource = "payment"
 
     class Config:
         extra = "forbid"

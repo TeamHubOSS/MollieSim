@@ -7,7 +7,7 @@ from molliesim.api.utils import paginate
 from molliesim.router import Router
 from molliesim import storage
 
-from . import models
+from .models import Payment, PaymentCreate
 
 
 class PaymentEndpoints:
@@ -19,7 +19,7 @@ class PaymentEndpoints:
 
     @Router.route("POST", CREATE)
     def create(path, headers, body):
-        p = parse_body(models.Payment, body)
+        p = Payment(**parse_body(PaymentCreate, body).dict())
         storage.set_payment(p)
         return p.dict(), HTTPStatus.CREATED
 

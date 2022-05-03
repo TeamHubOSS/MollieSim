@@ -10,6 +10,7 @@ pydantic = "*"
 flit = "*"
 pytest = "*"
 deepdiff = "*"
+freezegun = "*"
 
 [scripts]
 test = "pytest"
