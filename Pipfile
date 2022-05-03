@@ -9,6 +9,7 @@ pydantic = "*"
 [dev-packages]
 flit = "*"
 pytest = "*"
+deepdiff = "*"
 
 [scripts]
 test = "pytest"

@@ -31,7 +31,7 @@ class Payment(BaseModel):
     description: str
     webhookUrl: str
     redirectUrl: str
-    sequenceType: str
+    sequenceType: str = "oneoff"
     id: str = None
 
     def __init__(self, **data):
