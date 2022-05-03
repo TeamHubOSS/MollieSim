@@ -1,7 +1,7 @@
 name: Publish to PyPi
 on:
   workflow_run:
-    workflows: [Run unit tests]
+    workflows: [Tests]
     types:
       - completed
 jobs:
