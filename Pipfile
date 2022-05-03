@@ -9,3 +9,6 @@ pydantic = "*"
 [dev-packages]
 flit = "*"
 pytest = "*"
+
+[scripts]
+test = "pytest"

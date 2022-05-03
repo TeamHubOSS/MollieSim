@@ -24,4 +24,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pipenv'
       - run: pipenv install
+      - name: Run tests
+        run: pipenv run test
       - run: echo "🍏 This job's status is ${{ job.status }}."
