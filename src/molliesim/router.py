@@ -16,6 +16,7 @@ class Router:
     @staticmethod
     def handle_route(req_method, req_path, header, body):
         for method, re_path, func in Router.registry:
-            if req_method == method and re.match(re_path, req_path):
-                return func(req_path, header, body)
+            m = re.match(re_path, req_path)
+            if req_method == method and m:
+                return func(req_path, header, body, *m.groups())
         return {}, HTTPStatus.NOT_FOUND

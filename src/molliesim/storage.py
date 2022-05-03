@@ -47,3 +47,8 @@ class Storage:
     @staticmethod
     def clear_all():
         MEMSTOR.clear()
+
+
+class PaymentStorage(Storage):
+    def __init__(self):
+        super().__init__(ResourceTypes.PAYMENT)
